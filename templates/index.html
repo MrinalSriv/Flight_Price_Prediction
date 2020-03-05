@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Flight Prediction</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/everest.css') }}">
+	<script src="{{url_for('static', filename='everest_2.js')}}"></script>
+	<!-- <script src="{{url_for('static', filename='everest.js')}}"></script> -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	
+</head>
+<body>
+<form method="post" action="/" enctype="multipart/form-data" >
+<div id="container">
+  <!--<div id="top">  
+  </div>-->
+  <div id="navcontainer">
+    <ul id="navlist">
+	<img src="../static/css/images/header.png" alt="" style="height:30px" />
+	<img src="../static/css/images/header.png" alt="" style="height:100px" />
+	<img src="../static/css/images/header.png" alt="" style="height:30px" />
+      <h2><span style="font-weight:bold; color:#b29b35;">FLIGHT PREDICTION</span></h2>
+    </ul>
+  </div>
+  <div id="leftnav">
+    <ul id="leftnavmenu">
+		<h2>Data File:</h2>
+		<h1/>
+		
+		<input id="upload_box" type="file" name="file" autocomplete="off" required/>
+		
+			<h1/>
+		
+			<input id="submit_button" type="submit" value="Submit" onclick="show_loading()"> <!-- $('#loading').show(); -->
+		
+    </ul>
+    
+  </div>
+  <div id="content">
+	<!-- result Summary -->
+	<h2>Result Summary</h2>
+	<div style="overflow-x: auto; white-space: nowrap;">
+		<table>
+		{% for table in output_tables %}
+		{{ table|safe }}
+		{% endfor %}
+			
+		</table>
+
+	</div>
+  </div>
+    <div id="myModal" class="modal">
+
+	  <!-- Modal content -->
+	  <div class="modal-content">
+		<span class="close">&times;</span>
+		<br/>
+		<div id="top">  
+		</div>
+		<Table>
+		<tr>
+		<td>
+			<label id = "txtSummary"></label>
+		<td>
+		
+		</tr>
+		<tr>
+			<td><h2>URLs</h2>
+			<label id = "txtURLs"></label><td>
+		</tr>
+		</Table>
+	  </div>
+
+	</div>
+  <div id="footer">
+    &nbsp;
+  </div>
+</div>
+<div id="loading" style="display:none;">
+    <div style="display:grid;justify-content:center">
+    <img src="../static/Loading_2.gif" alt="" />
+    Processing File!
+    </div>
+</div>
+</form>
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+//btn.onclick = function() {
+  //modal.style.display = "block";
+//}
+
+function myFunction(Summary, URLs) {
+	
+  document.getElementById("txtSummary").innerHTML = Summary//#"Text"//SummaryText;
+  
+  var _URL = URLs.split(',');
+  URLs = "";
+  for(let i = 0; i < _URL.length; i++){
+       URLs = URLs + "<br/>" + (parseInt(i)+1).toString() + "- <a href = " + _URL[i] + " target='_blank'>" + (_URL[i]) + "</a>";
+	}
+  document.getElementById("txtURLs").innerHTML = URLs;
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+</body>
+</html>
